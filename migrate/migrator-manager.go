@@ -3,7 +3,7 @@ package migrate
 import (
 	"context"
 	"fmt"
-	"github.com/CentralConcept/go-eventsourcing-pgx/eventstore/pgx/logging"
+	"github.com/CentralConcept/go-eventsourcing-pgx/logging"
 	"github.com/jackc/pgx/v5"
 	"time"
 )
