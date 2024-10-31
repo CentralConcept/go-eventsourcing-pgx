@@ -1,4 +1,5 @@
 github.com/CentralConcept/go-eventsourcing-pgx/migrate v0.1.0/go.mod h1:GBX5vAfWuEQC51+U+DQZK4tCPf1JFQT4cUoOykdpkPs=
+github.com/CentralConcept/go-eventsourcing-pgx/migrate v0.1.1/go.mod h1:GBX5vAfWuEQC51+U+DQZK4tCPf1JFQT4cUoOykdpkPs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/hallgren/eventsourcing/core v0.4.0/go.mod h1:rgo2kFwNVCb0bzUub5nOPlUYNlFkp1uUQBEQx5fM3Lk=
 github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=

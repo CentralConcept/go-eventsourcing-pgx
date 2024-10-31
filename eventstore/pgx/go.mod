@@ -3,7 +3,7 @@ module github.com/CentralConcept/go-eventsourcing-pgx/eventstore/pgx
 go 1.23.0
 
 require (
-	github.com/CentralConcept/go-eventsourcing-pgx/migrate v0.1.0
+	github.com/CentralConcept/go-eventsourcing-pgx/migrate v0.1.1
 	github.com/hallgren/eventsourcing/core v0.4.0
 	github.com/jackc/pgx/v5 v5.7.1
 )
