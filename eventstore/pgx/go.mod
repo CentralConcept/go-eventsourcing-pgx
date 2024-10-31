@@ -1,4 +1,4 @@
-module github.com/CentralConcept/eventsourcing/eventstore/pgx
+module github.com/CentralConcept/go-eventsourcing-pgx/eventstore/pgx
 
 go 1.23.0
 
