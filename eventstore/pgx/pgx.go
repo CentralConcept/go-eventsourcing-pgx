@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/CentralConcept/go-eventsourcing-pgx/eventstore/pgx/logging"
+	"github.com/CentralConcept/go-eventsourcing-pgx/logging"
 	"github.com/hallgren/eventsourcing/core"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
