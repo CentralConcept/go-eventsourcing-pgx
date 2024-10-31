@@ -2,7 +2,7 @@ package pgx
 
 import (
 	"context"
-	"github.com/CentralConcept/go-eventsourcing-pgx/eventstore/pgx/migrate"
+	"github.com/CentralConcept/go-eventsourcing-pgx/migrate"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
