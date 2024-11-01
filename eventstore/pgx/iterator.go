@@ -23,12 +23,12 @@ func (i *iterator) Value() (core.Event, error) {
 
 	r := i.rows
 	var (
-		globalVersion, version     core.Version
-		id, reason, typ, timestamp string
-		data, metadata             []byte
+		globalVersion, version               core.Version
+		id, reason, aggregateType, timestamp string
+		data, metadata                       []byte
 	)
 
-	if err := r.Scan(&globalVersion, &id, &version, &reason, &typ, &timestamp, &data, &metadata); err != nil {
+	if err := r.Scan(&globalVersion, &id, &version, &reason, &aggregateType, &timestamp, &data, &metadata); err != nil {
 		return core.Event{}, err
 	}
 
@@ -41,7 +41,7 @@ func (i *iterator) Value() (core.Event, error) {
 		AggregateID:   id,
 		Version:       version,
 		GlobalVersion: globalVersion,
-		AggregateType: typ,
+		AggregateType: aggregateType,
 		Timestamp:     t,
 		Data:          data,
 		Metadata:      metadata,

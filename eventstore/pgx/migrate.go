@@ -19,6 +19,13 @@ var (
 			"create indices",
 			`create unique index id_type_version on events (id, type, version);create index id_type on events (id, type);`,
 		),
+		migrate.NewMigration("Rename column type to aggregate_type",
+			func(ctx context.Context, cmd migrate.Commands) error {
+				if _, err := cmd.Exec(ctx, `alter table events rename column type to aggregate_type;`); err != nil {
+					return err
+				}
+				return nil
+			}),
 	}
 )
 

@@ -74,7 +74,7 @@ func (p *PostgresPgx) Save(events []core.Event) error {
 	var version int
 	rowErr := tx.QueryRow(
 		ctx,
-		`SELECT version FROM events WHERE id = $1 AND "type" = $2 ORDER BY version DESC LIMIT 1`,
+		`SELECT version FROM events WHERE id = $1 AND aggregate_type = $2 ORDER BY version DESC LIMIT 1`,
 		aggregateID,
 		aggregateType,
 	).Scan(&version)
@@ -87,7 +87,7 @@ func (p *PostgresPgx) Save(events []core.Event) error {
 		return core.ErrConcurrency
 	}
 
-	insert := `INSERT INTO events (id, version, reason, "type", timestamp, data, metadata) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING seq`
+	insert := `INSERT INTO events (id, version, reason, aggregate_type, timestamp, data, metadata) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING seq`
 	for i, event := range events {
 		err := tx.QueryRow(
 			ctx,
@@ -108,11 +108,11 @@ func (p *PostgresPgx) Save(events []core.Event) error {
 	return tx.Commit(ctx)
 }
 
-// Get retrieves events from the PostgreSQL database based on the given aggregate ID, type, and version.
+// Get retrieves events from the PostgreSQL database based on the given aggregate ID, aggregate_type, and version.
 // It returns an iterator over the events and an error if any occurs.
-func (p *PostgresPgx) Get(ctx context.Context, id string, aggregateType string, afterVersion core.Version) (core.Iterator, error) {
-	selectStm := `SELECT seq, id, version, reason, type, timestamp, data, metadata FROM events WHERE id = $1 AND "type" = $2 AND version > $3 ORDER BY version`
-	rows, err := p.db.Query(ctx, selectStm, id, aggregateType, afterVersion)
+func (p *PostgresPgx) Get(ctx context.Context, id string, aggregate_type string, afterVersion core.Version) (core.Iterator, error) {
+	selectStm := `SELECT seq, id, version, reason, aggregate_type, timestamp, data, metadata FROM events WHERE id = $1 AND aggregate_type = $2 AND version > $3 ORDER BY version`
+	rows, err := p.db.Query(ctx, selectStm, id, aggregate_type, afterVersion)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +128,7 @@ func (p *PostgresPgx) All(ctx context.Context, start core.Version, count uint64)
 	return func() (core.Iterator, error) {
 		rows, err := p.db.Query(
 			ctx,
-			`SELECT seq, id, version, reason, type, timestamp, data, metadata FROM events WHERE seq >= $1 ORDER BY seq LIMIT $2`,
+			`SELECT seq, id, version, reason, aggregate_type, timestamp, data, metadata FROM events WHERE seq >= $1 ORDER BY seq LIMIT $2`,
 			start,
 			count,
 		)
