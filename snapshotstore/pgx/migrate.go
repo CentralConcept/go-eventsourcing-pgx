@@ -10,7 +10,7 @@ var (
 	migrations = []migrate.Migration{
 		migrate.NewMigration("create events table",
 			func(ctx context.Context, cmd migrate.Commands) error {
-				if _, err := cmd.Exec(ctx, `create table snapshots (id VARCHAR NOT NULL, type VARCHAR, version INTEGER, global_version INTEGER, state bytea);`); err != nil {
+				if _, err := cmd.Exec(ctx, `create table if not exists snapshots (id VARCHAR NOT NULL, type VARCHAR, version INTEGER, global_version INTEGER, state bytea);`); err != nil {
 					return err
 				}
 				return nil

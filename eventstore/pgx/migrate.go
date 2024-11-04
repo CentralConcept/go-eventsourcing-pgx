@@ -10,7 +10,7 @@ var (
 	migrations = []migrate.Migration{
 		migrate.NewMigration("create events table",
 			func(ctx context.Context, cmd migrate.Commands) error {
-				if _, err := cmd.Exec(ctx, `create table events (seq SERIAL PRIMARY KEY, id VARCHAR NOT NULL, version INTEGER, reason VARCHAR, "type" VARCHAR, timestamp VARCHAR, data bytea, metadata bytea);`); err != nil {
+				if _, err := cmd.Exec(ctx, `create table if not exists events (seq SERIAL PRIMARY KEY, id VARCHAR NOT NULL, version INTEGER, reason VARCHAR, "type" VARCHAR, timestamp VARCHAR, data bytea, metadata bytea);`); err != nil {
 					return err
 				}
 				return nil
@@ -26,6 +26,10 @@ var (
 				}
 				return nil
 			}),
+		migrate.NewRawMigration(
+			"alter index id_type_version to use new aggregate_type",
+			`drop index id_type_version;create unique index id_aggregate_type_version on events (id, aggregate_type, version);`,
+		),
 	}
 )
 
